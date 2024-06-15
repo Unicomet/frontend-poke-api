@@ -23,7 +23,7 @@
 const axios = require('axios').default;
 
 export default {
-    name: 'Detailspokemon',
+    name: 'DetailsPokemon',
     data() {
         return {
             pokemon: {},
