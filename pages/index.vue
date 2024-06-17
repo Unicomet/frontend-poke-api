@@ -1,16 +1,17 @@
 <template>
   <div>
-    <header-navbar />
-    <list-items />
-    <footer-component />
+    <HeaderNavbar />
+    <ListItems />
+    <FooterComponent />
   </div>
 </template>
 
 <script>
-import HeaderNavbar from '~/components/HeaderNavbar.vue'
-import ListItems from '~/components/ListItems.vue'
+import FooterComponent from '~/components/FooterComponent.vue';
+import HeaderNavbar from '~/components/HeaderNavbar.vue';
+import ListItems from '~/components/ListItems.vue';
 export default {
-  components: { ListItems, HeaderNavbar },
   name: 'IndexPage',
+  components: { ListItems, HeaderNavbar, FooterComponent },
 }
 </script>

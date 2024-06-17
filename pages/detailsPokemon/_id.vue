@@ -1,42 +1,50 @@
 <template>
     <div>
-        <header-navbar />
+        <HeaderNavbar />
         <div class="container text-center mb-5">
-            <h1> Name: {{ pokemon.name }}</h1>
-            <h3>Origin: {{ pokemon.origin.name }}</h3>
-            <b-img thumbnail fluid :src="pokemon.image" alt="Image" class="my-4"></b-img>
+            <h1>Name: {{ pokemonData.name }}</h1>
+            <h3>Capture Rate: {{ pokemonData.capture_rate }}</h3>
+            <b-img center thumbnail :src="pokemonImage" alt="Image" class="my-4" width="300"></b-img>
             <div class="fw-semibold fs-5">
-                <p>Location: {{ pokemon.location.name }}</p>
-                <p>Gender: {{ pokemon.gender }}</p>
-                <p>Species: {{ pokemon.species }}</p>
-                <p>Status: {{ pokemon.status }}</p>
-                <p v-if="pokemon.type">Type: {{ pokemon.type }}</p>
+                <p>Gender Rate: {{ pokemonData.gender_rate }}</p>
+                <p>Has Gender Differences: {{ pokemonData.has_gender_differences }}</p>
+                <p>Hatch Counter: {{ pokemonData.hatch_counter }}</p>
+                <p>Order: {{ pokemonData.order }}</p>
             </div>
         </div>
-        <footer-component />
+        <FooterComponent />
     </div>
 </template>
 
 
 <script>
+import FooterComponent from '~/components/FooterComponent.vue';
+import HeaderNavbar from '~/components/HeaderNavbar.vue';
+
 
 const axios = require('axios').default;
 
 export default {
     name: 'DetailsPokemon',
+    components:
+        { HeaderNavbar, FooterComponent },
     data() {
         return {
-            pokemon: {},
-            mainProps: { blank: true, blankColor: '#777', width: 75, height: 75, class: 'm1' }
+            pokemonData: {},
+            pokemonImage: "",
+            propsImage: {
+                blank: true, blankColor: '#777', class: 'm1', width: '300px'
+            },
+            //pokemonId: this.$route.params.id
         }
     },
     methods: {
-        getDetailspokemon() {
+        getDetailsPokemon() {
             const endpoint = "https://beta.pokeapi.co/graphql/v1beta";
 
             const query = `
-            query getPokemons {
-                pokemon_v2_pokemonspecies(where: {id: {_eq: ${this.$route.params.id}}}) {
+            query getPokemon {
+                pokemon_v2_pokemonspecies_by_pk(id:  ${this.$route.params.id} ) {
                     name
                     capture_rate
                     base_happiness
@@ -44,6 +52,9 @@ export default {
                     has_gender_differences
                     hatch_counter
                     order
+                },
+                pokemon_v2_pokemonformsprites_by_pk(id: ${this.$route.params.id} ) {
+                    sprites(path: "front_default")
                 }
             } `;
 
@@ -52,8 +63,10 @@ export default {
                     query: query,
                 })
                 .then((response) => {
-                    this.pokemon = response.data.data.pokemon;
-                    console.log(this.pokemon)
+                    this.pokemonData = response.data.data.pokemon_v2_pokemonspecies_by_pk;
+                    this.pokemonImage = response.data.data.pokemon_v2_pokemonformsprites_by_pk.sprites;
+                    console.log(this.pokemonData);
+                    console.log(this.pokemonImage);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -62,7 +75,7 @@ export default {
         }
     },
     mounted() {
-        this.getDetailspokemon();
+        this.getDetailsPokemon();
     }
 }
 

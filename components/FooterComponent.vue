@@ -4,7 +4,7 @@
             <p>
                 Made with ❤
             </p>
-            <p class="my-0">Data obtained from <a href="https://rickandmortyapi.com/" target="_blank">here</a> </p>
+            <p class="my-0">Data obtained from <a href="https://pokeapi.co/" target="_blank">here</a> </p>
         </div>
     </footer>
 </template>
