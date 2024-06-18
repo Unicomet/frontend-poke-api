@@ -2,7 +2,7 @@ export default {
     mode: 'spa',
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: 'learning-nuxt',
+        title: 'PokeAPI',
         htmlAttrs: {
             lang: 'en',
         },
@@ -12,7 +12,11 @@ export default {
                 name: 'viewport',
                 content: 'width=device-width, initial-scale=1',
             },
-            { hid: 'description', name: 'description', content: '' },
+            {
+                hid: 'description',
+                name: 'description',
+                content: 'A site where you can find all the pokemons',
+            },
             { name: 'format-detection', content: 'telephone=no' },
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -40,6 +44,9 @@ export default {
         // https://go.nuxtjs.dev/axios
         '@nuxtjs/axios',
     ],
+    privateRuntimeConfig: {
+        apiURL: process.env.API_URL,
+    },
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
