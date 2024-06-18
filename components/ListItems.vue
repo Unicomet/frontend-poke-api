@@ -9,7 +9,7 @@
                 <b-form-input id="search" v-model="inputSearch" @input="findPokemonsByPage()"
                     placeholder="Write..."></b-form-input>
                 <b-form-input v-show="selectedFilter != 'name'" id="range" v-model="inputSearch" type="range" min="0"
-                    max="maxLimit" @input="findPokemonsByPage()"></b-form-input>
+                    :max="maxLimit" @input="findPokemonsByPage()"></b-form-input>
             </b-input-group>
 
             <b-button variant="primary" class="ms-4 w-auto" @click="findPokemonsByPage()">Search</b-button>
@@ -33,7 +33,7 @@
         </div>
         <div class=" w-25 mx-auto my-5">
             <b-pagination v-model="currentPage" :total-rows="totalItems" :per-page="itemsPerPage"
-                aria-controls="pokemons-list"></b-pagination>
+                aria-controls="pokemons-list" @input="findPokemonsByPage"></b-pagination>
         </div>
     </div>
 </template>
@@ -152,12 +152,6 @@ export default {
                 .then((response) => {
                     this.pokemons = response.data.data.pokemon_v2_pokemon;
                     this.totalItems = response.data.data.pokemon_v2_pokemon_aggregate.aggregate.count;
-                    if (this.selectedFilter != 'name') {
-                        if (this.selectedFilter === 'height')
-                            this.maxLimit = response.data.data.pokemon_v2_pokemon_aggregate.aggregate.max.height;
-                        else if (this.selectedFilter === 'weight')
-                            this.maxLimit = response.data.data.pokemon_v2_pokemon_aggregate.aggregate.max.weight;
-                    }
                     console.log("Total items: " + this.totalItems);
                     //this.totalItems = response.data.data.pokemons.info.count
                 })
