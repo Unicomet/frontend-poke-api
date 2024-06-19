@@ -1,17 +1,19 @@
 <template>
   <div>
-    <HeaderNavbar />
-    <ListItems />
-    <FooterComponent />
+    <div class="d-flex flex-column min-vh-100">
+      <HeaderNavbar />
+      <ListItems />
+      <FooterComponent />
+    </div>
   </div>
 </template>
 
 <script>
-import FooterComponent from '~/components/FooterComponent.vue';
-import HeaderNavbar from '~/components/HeaderNavbar.vue';
-import ListItems from '~/components/ListItems.vue';
+import FooterComponent from "~/components/FooterComponent.vue";
+import HeaderNavbar from "~/components/HeaderNavbar.vue";
+import ListItems from "~/components/ListItems.vue";
 export default {
-  name: 'IndexPage',
+  name: "IndexPage",
   components: { ListItems, HeaderNavbar, FooterComponent },
-}
+};
 </script>
